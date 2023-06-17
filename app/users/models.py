@@ -3,6 +3,10 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from app import db
 
 
+def generate_uuid():
+    return str(uuid4())
+
+
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -18,9 +22,9 @@ class User(db.Model):
         
     def check_password(self,password_raw):
         return check_password_hash(self.passwordhash,password_raw)
-    
+
     
 class UserToken(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    token = db.Column(db.String(128),default=str(uuid4()))
+    token = db.Column(db.String(128),default=generate_uuid)
     user = db.Column(db.Integer)

@@ -24,3 +24,14 @@ def todo_edit(pk):
         return jsonify({'todo':result.to_json()})
     else:
         return jsonify(msg),401
+    
+@todo.route('/create/todo/',methods=['POST'])
+def todo_create():
+    data, status = required_login(request)
+    if not status:
+        return jsonify(data)
+    
+    
+    author=get_user_by_token(request.authorization.token)
+    result=Todo.from_json_create(request.json,author.id)
+    return jsonify({'todo':result.to_json()})

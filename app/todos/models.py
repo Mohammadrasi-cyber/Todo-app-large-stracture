@@ -25,6 +25,19 @@ class  Todo(db.Model):
         db.session.commit()
         return self
     
+    @staticmethod
+    def from_json_create(todo_json,author_id):
+        title = todo_json.get('title')
+        note = todo_json.get('note')
+        
+        
+        if title is None:
+            return None    
+        new_todo = Todo(title=title,note=note,author=author_id)
+        db.session.add(new_todo)
+        db.session.commit()
+        return new_todo
+    
     def get_author(self,author_id):
         
         user=User.query.filter_by(id=author_id).first()

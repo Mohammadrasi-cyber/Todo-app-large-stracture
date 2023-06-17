@@ -1,5 +1,5 @@
 from flask import jsonify,request
-from .utilities import json_login
+from .utilities import json_login,register_user
 from . import user
 
 
@@ -10,3 +10,7 @@ def test_view():
 @user.route('/login',methods=['POST'])
 def login():
     return jsonify(json_login(request.json)) 
+
+@user.route('/register', methods=['POST'])
+def register():
+    return register_user(request)
